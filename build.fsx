@@ -15,6 +15,7 @@ Environment.CurrentDirectory <- __SOURCE_DIRECTORY__
 #r "packages/Suave/lib/net40/Suave.dll"
  
 open Suave // always open suave
+open Suave.Http
 open Suave.Http.Successful // for OK-result
 open Suave.Web // for config
 open Suave.Types
@@ -26,5 +27,5 @@ let serverConfig =
     { defaultConfig with
        bindings = [ HttpBinding.mk HTTP IPAddress.Loopback port ]
     }
- 
-startWebServer serverConfig (OK "Hello World! It's Suave.io on Azure Websites.  Hopefully just the free pay as you go option. <a href='https://github.com/shanselman/suavebootstrapper'>So easy to setup. Just click Deploy.</a>")
+
+startWebServer serverConfig (warbler (fun _ -> OK ("Hello World! It's Suave.io on Azure Websites.  Hopefully just the free pay as you go option. <a href='https://github.com/shanselman/suavebootstrapper'>So easy to setup. Just click Deploy.</a><br/>"+(DateTime.Now.ToLongTimeString())+"<br/>"+(Guid.NewGuid().ToString()) )))
